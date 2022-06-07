@@ -1,0 +1,39 @@
+h1.header {
+    border: 2px brown solid;
+    background-color: white;
+    color: brown;
+    text-align: center;
+    padding: 10px;
+}
+
+div.message_holder{
+    background-color: white;
+    border: 3px #eee solid;
+    padding: 5px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+h3{
+   color: #ccc;
+   font-size: 30px;
+}
+
+div.post{
+    overflow-wrap: break-word;
+}
+
+div.container{
+    width: 30%;
+    margin: 0 auto;
+}
+
+body {
+ background-image: url("https://storage.googleapis.com/gweb-uniblog-publish-prod/images/18-18.max-1000x1000.png");
+ background-color: #cccccc;
+}
+
+form{
+    display: flex;
+    justify-content: space-evenly;
+}

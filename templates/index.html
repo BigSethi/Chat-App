@@ -1,0 +1,55 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>Akul's Chat App</title>
+  </head>
+  <body>
+
+    <h1 class='header'> Akuls's Chat App</h1>
+    
+   <div class="container">
+      <div class="message_holder" id="holder">
+         <h3 >No message yet..</h3>
+      </div>
+
+      <form action="" method="POST">
+         <input type="text" class="username" placeholder="User Name"/>
+         <input type="text" class="message" placeholder="Messages"/>
+         <input type="submit"/>
+      </form>
+   </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on( 'connect', function() {
+        socket.emit( 'my event', {
+          data: 'User Connected'
+        } )
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let user_name = $( 'input.username' ).val()
+          let user_input = $( 'input.message' ).val()
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          $( 'input.message' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div class="post"><b style="color: #000">'+msg.user_name+'</b>: '+msg.message+'</div>' )
+          var myDiv = document.getElementById("holder");
+          myDiv.scrollTop = myDiv.scrollHeight;
+        }
+      })
+    </script>
+
+  </body>
+  </html>
